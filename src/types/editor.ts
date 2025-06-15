@@ -8,8 +8,8 @@ export interface GroupNode extends Node {
   type: 'group';
   isHorizontal: boolean;
   ratio: number;
-  childA: Node;
-  childB: Node;
+  childA: EditorNode;
+  childB: EditorNode;
 }
 
 export interface LeafNode extends Node {

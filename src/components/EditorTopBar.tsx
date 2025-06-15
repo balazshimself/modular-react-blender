@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X } from 'lucide-react';
+import { X, SquareSplitHorizontal, SquareSplitVertical } from 'lucide-react';
 import { EditorType } from '@/types/editor';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -8,6 +8,8 @@ interface EditorTopBarProps {
   currentEditor: EditorType;
   onEditorChange: (editor: EditorType) => void;
   onClose: () => void;
+  onSplitHorizontal: () => void;
+  onSplitVertical: () => void;
   isFocused: boolean;
 }
 
@@ -15,6 +17,8 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
   currentEditor,
   onEditorChange,
   onClose,
+  onSplitHorizontal,
+  onSplitVertical,
   isFocused
 }) => {
   const editorOptions = Object.values(EditorType);
@@ -36,12 +40,31 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
         </SelectContent>
       </Select>
       
-      <button
-        onClick={onClose}
-        className="p-1 text-gray-400 hover:text-white hover:bg-gray-600 rounded transition-colors"
-      >
-        <X size={12} />
-      </button>
+      <div className="flex items-center gap-1">
+        <button
+          onClick={onSplitHorizontal}
+          className="p-1 text-gray-400 hover:text-white hover:bg-gray-600 rounded transition-colors"
+          title="Split Horizontally"
+        >
+          <SquareSplitHorizontal size={12} />
+        </button>
+        
+        <button
+          onClick={onSplitVertical}
+          className="p-1 text-gray-400 hover:text-white hover:bg-gray-600 rounded transition-colors"
+          title="Split Vertically"
+        >
+          <SquareSplitVertical size={12} />
+        </button>
+        
+        <button
+          onClick={onClose}
+          className="p-1 text-gray-400 hover:text-white hover:bg-gray-600 rounded transition-colors"
+          title="Close"
+        >
+          <X size={12} />
+        </button>
+      </div>
     </div>
   );
 };

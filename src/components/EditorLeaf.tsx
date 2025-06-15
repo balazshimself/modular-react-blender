@@ -18,6 +18,14 @@ const EditorLeaf: React.FC<EditorLeafProps> = ({ node, context }) => {
     context.closeNode(node.id);
   };
 
+  const handleSplitHorizontal = () => {
+    context.splitNode(node.id, 'horizontal');
+  };
+
+  const handleSplitVertical = () => {
+    context.splitNode(node.id, 'vertical');
+  };
+
   const handleFocus = () => {
     context.setFocusedNode(node.id);
   };
@@ -31,6 +39,8 @@ const EditorLeaf: React.FC<EditorLeafProps> = ({ node, context }) => {
         currentEditor={node.editor}
         onEditorChange={handleEditorChange}
         onClose={handleClose}
+        onSplitHorizontal={handleSplitHorizontal}
+        onSplitVertical={handleSplitVertical}
         isFocused={node.isFocused}
       />
       <div className="flex-1 overflow-hidden">
