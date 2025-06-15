@@ -75,10 +75,18 @@ export const useEditorTree = () => {
     const targetNode = findNode(nodeId);
     if (!targetNode || targetNode.type !== 'leaf') return;
 
-    const newLeaf: LeafNode = {
+    // Create two new leaf nodes with the same editor type as the original
+    const newLeafA: LeafNode = {
       id: generateId(),
       type: 'leaf',
-      editor: EditorType.VIEWPORT_3D,
+      editor: targetNode.editor,
+      isFocused: true
+    };
+
+    const newLeafB: LeafNode = {
+      id: generateId(),
+      type: 'leaf',
+      editor: targetNode.editor,
       isFocused: false
     };
 
@@ -87,8 +95,8 @@ export const useEditorTree = () => {
       type: 'group',
       isHorizontal: direction === 'horizontal',
       ratio: 0.5,
-      childA: { ...targetNode },
-      childB: newLeaf,
+      childA: newLeafA,
+      childB: newLeafB,
       parent: targetNode.parent
     };
 
@@ -102,7 +110,10 @@ export const useEditorTree = () => {
       }
       return updateNodeInTree(nodeId, () => newGroup, prevRoot);
     });
-  }, [findNode, updateNodeInTree]);
+
+    // Focus the first child
+    setFocusedNode(newLeafA.id);
+  }, [findNode, updateNodeInTree, setFocusedNode]);
 
   const closeNode = useCallback((nodeId: string) => {
     const targetNode = findNode(nodeId);
@@ -111,27 +122,29 @@ export const useEditorTree = () => {
     const parent = targetNode.parent;
     const sibling = parent.childA.id === nodeId ? parent.childB : parent.childA;
     
-    // Update sibling's parent reference
-    sibling.parent = parent.parent;
+    // Update sibling's parent reference to match the parent's parent
+    const updatedSibling = { ...sibling, parent: parent.parent };
 
     setRootNode(prevRoot => {
       if (prevRoot.id === parent.id) {
-        return sibling;
+        // If parent is root, sibling becomes new root
+        return updatedSibling;
       }
-      return updateNodeInTree(parent.id, () => sibling, prevRoot);
+      // Replace parent with sibling in the tree
+      return updateNodeInTree(parent.id, () => updatedSibling, prevRoot);
     });
 
     // Update focus if the closed node was focused
     if (focusedNodeId === nodeId) {
-      if (sibling.type === 'leaf') {
-        setFocusedNode(sibling.id);
+      if (updatedSibling.type === 'leaf') {
+        setFocusedNode(updatedSibling.id);
       } else {
         // Find first leaf in sibling subtree
         const findFirstLeaf = (node: EditorNode): string | null => {
           if (node.type === 'leaf') return node.id;
           return findFirstLeaf(node.childA) || findFirstLeaf(node.childB);
         };
-        const firstLeafId = findFirstLeaf(sibling);
+        const firstLeafId = findFirstLeaf(updatedSibling);
         if (firstLeafId) setFocusedNode(firstLeafId);
       }
     }
