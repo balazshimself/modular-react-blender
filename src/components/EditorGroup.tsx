@@ -1,8 +1,11 @@
-
-import React from 'react';
-import { GroupNode, EditorContext } from '@/types/editor';
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
-import EditorNode from './EditorNode';
+import React from "react";
+import { GroupNode, EditorContext } from "@/types/editor";
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from "@/components/ui/resizable";
+import EditorNode from "./EditorNode";
 
 interface EditorGroupProps {
   node: GroupNode;
@@ -15,9 +18,10 @@ const EditorGroup: React.FC<EditorGroupProps> = ({ node, context }) => {
     context.updateRatio(node.id, newRatio);
   };
 
-  const direction = node.isHorizontal ? 'horizontal' : 'vertical';
+  const direction = node.isHorizontal ? "horizontal" : "vertical";
   const sizeA = node.ratio * 100;
   const sizeB = (1 - node.ratio) * 100;
+  const nodeWithChildren = node as any;
 
   return (
     <ResizablePanelGroup
@@ -26,13 +30,13 @@ const EditorGroup: React.FC<EditorGroupProps> = ({ node, context }) => {
       className="h-full"
     >
       <ResizablePanel defaultSize={sizeA} minSize={10}>
-        <EditorNode node={node.childA} context={context} />
+        <EditorNode node={nodeWithChildren.childA} context={context} />
       </ResizablePanel>
-      
+
       <ResizableHandle withHandle />
-      
+
       <ResizablePanel defaultSize={sizeB} minSize={10}>
-        <EditorNode node={node.childB} context={context} />
+        <EditorNode node={nodeWithChildren.childB} context={context} />
       </ResizablePanel>
     </ResizablePanelGroup>
   );

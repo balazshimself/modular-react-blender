@@ -1,8 +1,13 @@
-
-import React from 'react';
-import { X, SquareSplitHorizontal, SquareSplitVertical } from 'lucide-react';
-import { EditorType } from '@/types/editor';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import React from "react";
+import { X, SquareSplitHorizontal, SquareSplitVertical } from "lucide-react";
+import { EditorType } from "@/types/editor";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface EditorTopBarProps {
   currentEditor: EditorType;
@@ -19,15 +24,20 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
   onClose,
   onSplitHorizontal,
   onSplitVertical,
-  isFocused
+  isFocused,
 }) => {
   const editorOptions = Object.values(EditorType);
 
   return (
-    <div className={`flex items-center justify-between px-2 py-1 bg-gray-800 border-b border-gray-700 ${
-      isFocused ? 'bg-gray-700' : ''
-    }`}>
-      <Select value={currentEditor} onValueChange={(value) => onEditorChange(value as EditorType)}>
+    <div
+      className={`flex items-center justify-between px-2 py-1 bg-gray-800 border-b border-gray-700 ${
+        isFocused ? "bg-gray-700" : ""
+      }`}
+    >
+      <Select
+        value={currentEditor}
+        onValueChange={(value) => onEditorChange(value as EditorType)}
+      >
         <SelectTrigger className="w-40 h-7 text-xs bg-transparent border-gray-600 text-white">
           <SelectValue />
         </SelectTrigger>
@@ -39,7 +49,7 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
           ))}
         </SelectContent>
       </Select>
-      
+
       <div className="flex items-center gap-1">
         <button
           onClick={onSplitHorizontal}
@@ -48,7 +58,7 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
         >
           <SquareSplitHorizontal size={12} />
         </button>
-        
+
         <button
           onClick={onSplitVertical}
           className="p-1 text-gray-400 hover:text-white hover:bg-gray-600 rounded transition-colors"
@@ -56,7 +66,7 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
         >
           <SquareSplitVertical size={12} />
         </button>
-        
+
         <button
           onClick={onClose}
           className="p-1 text-gray-400 hover:text-white hover:bg-gray-600 rounded transition-colors"
