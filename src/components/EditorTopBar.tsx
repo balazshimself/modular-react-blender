@@ -16,6 +16,7 @@ interface EditorTopBarProps {
   onSplitHorizontal: () => void;
   onSplitVertical: () => void;
   isFocused: boolean;
+  isMaximized: boolean;
 }
 
 const EditorTopBar: React.FC<EditorTopBarProps> = ({
@@ -25,6 +26,7 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
   onSplitHorizontal,
   onSplitVertical,
   isFocused,
+  isMaximized,
 }) => {
   const editorOptions = Object.values(EditorType);
 
@@ -55,6 +57,7 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
           onClick={onSplitHorizontal}
           className="p-1 text-gray-400 hover:text-white hover:bg-gray-600 rounded transition-colors"
           title="Split Horizontally"
+          disabled={isMaximized}
         >
           <SquareSplitHorizontal size={12} />
         </button>
@@ -63,6 +66,7 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
           onClick={onSplitVertical}
           className="p-1 text-gray-400 hover:text-white hover:bg-gray-600 rounded transition-colors"
           title="Split Vertically"
+          disabled={isMaximized}
         >
           <SquareSplitVertical size={12} />
         </button>
@@ -71,6 +75,7 @@ const EditorTopBar: React.FC<EditorTopBarProps> = ({
           onClick={onClose}
           className="p-1 text-gray-400 hover:text-white hover:bg-gray-600 rounded transition-colors"
           title="Close"
+          disabled={isMaximized}
         >
           <X size={12} />
         </button>

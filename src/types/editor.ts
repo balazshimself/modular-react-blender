@@ -28,15 +28,6 @@ export enum EditorType {
   TEXT_EDITOR = "Text Editor",
 }
 
-// export interface EditorContext {
-//   focusedNodeId: string | null;
-//   setFocusedNode: (nodeId: string) => void;
-//   updateNode: (nodeId: string, updates: Partial<LeafNode>) => void;
-//   splitNode: (nodeId: string, direction: "horizontal" | "vertical") => void;
-//   closeNode: (nodeId: string) => void;
-//   updateRatio: (nodeId: string, ratio: number) => void;
-// }
-
 export interface EditorContext {
   focusedNodeId: string | null;
   setFocusedNode: (nodeId: string) => void;

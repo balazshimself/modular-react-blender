@@ -1,8 +1,7 @@
-
-import React from 'react';
-import { LeafNode, EditorContext, EditorType } from '@/types/editor';
-import EditorTopBar from './EditorTopBar';
-import AbstractEditor from './editors/AbstractEditor';
+import React from "react";
+import { LeafNode, EditorContext, EditorType } from "@/types/editor";
+import EditorTopBar from "./EditorTopBar";
+import AbstractEditor from "./editors/AbstractEditor";
 
 interface EditorLeafProps {
   node: LeafNode;
@@ -19,11 +18,11 @@ const EditorLeaf: React.FC<EditorLeafProps> = ({ node, context }) => {
   };
 
   const handleSplitHorizontal = () => {
-    context.splitNode(node.id, 'horizontal');
+    context.splitNode(node.id, "horizontal");
   };
 
   const handleSplitVertical = () => {
-    context.splitNode(node.id, 'vertical');
+    context.splitNode(node.id, "vertical");
   };
 
   const handleFocus = () => {
@@ -31,7 +30,7 @@ const EditorLeaf: React.FC<EditorLeafProps> = ({ node, context }) => {
   };
 
   return (
-    <div 
+    <div
       className="flex flex-col h-full bg-gray-900 border border-gray-700"
       onClick={handleFocus}
     >
@@ -42,12 +41,10 @@ const EditorLeaf: React.FC<EditorLeafProps> = ({ node, context }) => {
         onSplitHorizontal={handleSplitHorizontal}
         onSplitVertical={handleSplitVertical}
         isFocused={node.isFocused}
+        isMaximized={context.isMaximized}
       />
       <div className="flex-1 overflow-hidden">
-        <AbstractEditor
-          type={node.editor}
-          isFocused={node.isFocused}
-        />
+        <AbstractEditor type={node.editor} isFocused={node.isFocused} />
       </div>
     </div>
   );

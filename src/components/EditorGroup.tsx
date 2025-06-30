@@ -16,6 +16,7 @@ const EditorGroup: React.FC<EditorGroupProps> = ({ node, context }) => {
   const handleResize = (sizes: number[]) => {
     const newRatio = sizes[0] / 100;
     context.updateRatio(node.id, newRatio);
+    console.log("Ratio updated!!");
   };
 
   const direction = node.isHorizontal ? "horizontal" : "vertical";
